@@ -31,17 +31,15 @@ class GraphTable
 	    // print the backbones and their neighbors
 		void printAll();        
 	    // see if mouse can reach cheese, given start and destination nodes
-		void depthfirstsearch(int, int);    
-	    // see if mouse can reach cheese, given start and destination nodes
-		void widthfirstsearch(int, int);    
+		void depthFirstSearch(int, int);      
     
 	private:
 	    NodeTypeBackbone* node;
 };  
 
+// constructor
 GraphTable::GraphTable() 
 { 
-	// constructor
     node = NULL;   
 }   
 
@@ -51,12 +49,12 @@ void GraphTable::make_graphtable()
     string input;           
     NodeTypeBackbone* current_backbone;
     NodeTypeNeighbor* current_neighbor;
-    NodeTypeBackbone* pre_backbone;
-    NodeTypeNeighbor* pre_neighbor;
+    NodeTypeBackbone* previous_backbone;
+    NodeTypeNeighbor* previous_neighbor;
     
 	// input file
-    string filename = "graphtable.txt";
-	// c_str() returns a pointer to an array of characters that represent the string object 
+    string filename = "graph_table.txt";
+	// c_str() returns a pointer to an array of characters that reprevioussent the string object 
     ifstream inFile(filename.c_str());
     
     if (inFile.is_open()) 
@@ -96,7 +94,7 @@ void GraphTable::make_graphtable()
                             current_backbone->node_value = n;
                             current_backbone->next_backbone = NULL;
                             current_backbone->next_neighbor = NULL;
-                            node = pre_backbone = current_backbone;
+                            node = previous_backbone = current_backbone;
                         }
                         else 
 						{ 
@@ -105,8 +103,8 @@ void GraphTable::make_graphtable()
                             current_backbone->node_value = n;
                             current_backbone->next_backbone = NULL;
                             current_backbone->next_neighbor = NULL;
-                            pre_backbone->next_backbone = current_backbone;
-                            pre_backbone = current_backbone;
+                            previous_backbone->next_backbone = current_backbone;
+                            previous_backbone = current_backbone;
                         }
                     }   
 					// if neighbor
@@ -118,14 +116,14 @@ void GraphTable::make_graphtable()
                         if(counter == 1) 
 						{  
 							// if first neighbor
-                            pre_backbone->next_neighbor = current_neighbor;
-                            pre_neighbor = current_neighbor;
+                            previous_backbone->next_neighbor = current_neighbor;
+                            previous_neighbor = current_neighbor;
                         }
                         else 
 						{  
 							// if not first neighbor
-                            pre_neighbor->next_neighbor = current_neighbor;
-                            pre_neighbor = current_neighbor;
+                            previous_neighbor->next_neighbor = current_neighbor;
+                            previous_neighbor = current_neighbor;
                         }
                     }
                     counter++;
@@ -180,7 +178,7 @@ void GraphTable::printAll()
 }   
 
 // depthfirstsearch function definition
-void GraphTable::depthfirstsearch(int source, int destination)
+void GraphTable::depthFirstSearch(int source, int destination)
 { 
 	// stack of nodes to look at
     Stack<NodeTypeBackbone*> SL;

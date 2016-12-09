@@ -6,9 +6,9 @@ int main()
     a.make_graphtable();
     a.printAll();
 	// depthFirstSearch(source, destination)
-    a.depthFirstSearch(25, 1);
+    //a.depthFirstSearch(25, 1);
 	
 	// reverse depthfirstsearch(destination, source) 
-	//a.depthFirstSearch(1, 25);
+	a.depthFirstSearch(1, 25);
     return 0;
 }
