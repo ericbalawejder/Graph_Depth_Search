@@ -1,4 +1,5 @@
 // stack in template type form
+// http://www.cplusplus.com/reference/stack/stack/
 
 #include <iostream>
 #include <new>
