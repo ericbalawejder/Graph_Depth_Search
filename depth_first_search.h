@@ -54,7 +54,7 @@ void GraphTable::make_graphtable()
     
 	// input file
     string filename = "graph_table.txt";
-	// c_str() returns a pointer to an array of characters that reprevioussent the string object 
+	// c_str() returns a pointer to an array of characters that represents the string object 
     ifstream inFile(filename.c_str());
     
     if (inFile.is_open()) 
@@ -135,44 +135,48 @@ void GraphTable::make_graphtable()
         inFile.close(); 
     }
 	// output message if file could not be opened/found.
-    else cout << "Unable to open file. \n\n";    
+    else
+	{ 
+		cout << "Unable to open file. \n\n";   
+	} 
 }   
 
 // printAll function definition
 void GraphTable::printAll() 
 {   
     // keeps track of backbone
-	NodeTypeBackbone* tmp1 = node; 
+	NodeTypeBackbone* temp1 = node; 
 	// keeps track of neighbor
-    NodeTypeNeighbor* tmp2;    
-    while(tmp1) 
+    NodeTypeNeighbor* temp2;    
+    while(temp1) 
 		{   
 		// as long as there's a backbone
-        cout << tmp1->node_value;
-        if (tmp1->next_neighbor) 
-		{   // if backbone has a neighbor(s)
+        cout << temp1->node_value;
+        if (temp1->next_neighbor) 
+		{   
+			// if backbone has a neighbor(s)
             cout << " -> ";  
             // first neighbor
-			tmp2 = tmp1->next_neighbor; 
-            cout<< tmp2->node_value;
+			temp2 = temp1->next_neighbor; 
+            cout<< temp2->node_value;
 			
-            while (tmp2->next_neighbor) 
+            while (temp2->next_neighbor) 
 			{    
 				// rest of neighbors
-                cout << " -> ";  // visual purpose
-                tmp2 = tmp2->next_neighbor;
-                cout<< tmp2->node_value;
+                cout << " -> ";  
+                temp2 = temp2->next_neighbor;
+                cout<< temp2->node_value;
             }
         }
         cout << endl;
 		
 		// visual purpose
-        if(tmp1->next_backbone)
+        if(temp1->next_backbone)
 		{ 
             cout << "---------------------------\n";
 		}
 		// continue to next backbone on graph table
-        tmp1 = tmp1->next_backbone; 
+        temp1 = temp1->next_backbone; 
     }
     cout << endl;
 }   
