@@ -144,7 +144,8 @@ void GraphTable::make_graphtable()
 // printAll function definition
 void GraphTable::printAll() 
 {   
-    // keeps track of backbone
+    cout << endl;
+	// keeps track of backbone
 	NodeTypeBackbone* temp1 = node; 
 	// keeps track of neighbor
     NodeTypeNeighbor* temp2;    
@@ -230,8 +231,8 @@ void GraphTable::depthFirstSearch(int source, int destination)
             cout << currentNode->node_value << " -> ";  
             if(currentNode->node_value == destination) 
 			{  
-                cout << "\nThe mouse can reach the cheese from node " 
-						<< source << " to node " << destination << ".\n";
+                cout << "\n\nThe mouse can reach the cheese from node " 
+						<< source << " to node " << destination << ".\n\n";
                 break;
             }
             visitedNodeStack.push(currentNode); 
