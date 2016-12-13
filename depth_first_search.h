@@ -80,9 +80,9 @@ void GraphTable::make_graphtable()
                 else 
 				{  
 					// if path value is 0
-                    //cout << n << " "; // for monitoring purposes
+                    //cout << n << " "; 
                     stream >> n;
-                    //cout << n << " "; // for monitoring purposes
+                    //cout << n << " "; 
                     //cout << "Block " << n << " is accessible.\n";
                     if(counter == 0) 
 					{  
@@ -170,7 +170,7 @@ void GraphTable::printAll()
         }
         cout << endl;
 		
-		// visual purpose
+		// visual display
         if(temp1->next_backbone)
 		{ 
             cout << "---------------------------\n";
@@ -185,26 +185,26 @@ void GraphTable::printAll()
 void GraphTable::depthFirstSearch(int source, int destination)
 { 
 	// stack of nodes to look at
-    Stack<NodeTypeBackbone*> SL;
+    Stack<NodeTypeBackbone*> nodeStack;
 	// stack of nodes visited
-    Stack<NodeTypeBackbone*> ST;    
+    Stack<NodeTypeBackbone*> visitedNodeStack;    
     // u node
-	NodeTypeBackbone* u = node;    
+	NodeTypeBackbone* currentNode = node;    
     // v node
-	NodeTypeBackbone* v;           
+	NodeTypeBackbone* neighborNode;           
     // keeps track of neighbor
 	NodeTypeNeighbor* current_neighbor;    
     
-    while(u) 
+    while(currentNode) 
 	{  
 		// checks to see if starting node is valid
 		// if starting node exists in graph table, continue
-        if(u->node_value == source)
+        if(currentNode->node_value == source)
 		{   
             // poor practice
 			break;
 		}
-        else if(!u->next_backbone && u->node_value != source)
+        else if(!currentNode->next_backbone && currentNode->node_value != source)
 		{  
 			// if starting node doesn't exist, end
             cout << "Node " << source << " is not a valid starting point.\n";
@@ -213,52 +213,52 @@ void GraphTable::depthFirstSearch(int source, int destination)
         else 
 		{   
 			// keep moving down the backbone
-            u = u->next_backbone;
+            currentNode = currentNode->next_backbone;
 		}
     }
 	
     cout << "Depth First Search:\n";
 	
-    SL.push(u); 
-    //cout << u->node_value << " has been pushed into SL.\n"; 
+    nodeStack.push(currentNode); 
+    //cout << currentNode->node_value << " has been pushed into nodeStack.\n"; 
 	
 	// Step 1
-    while(!SL.isEmpty()) 
+    while(!nodeStack.isEmpty()) 
 	{  
-        if(!ST.inStack(u)) 
+        if(!visitedNodeStack.inStack(currentNode)) 
 		{ 
-            cout << u->node_value << " -> ";  
-            if(u->node_value == destination) 
+            cout << currentNode->node_value << " -> ";  
+            if(currentNode->node_value == destination) 
 			{  
                 cout << "\nThe mouse can reach the cheese from node " 
 						<< source << " to node " << destination << ".\n";
                 break;
             }
-            ST.push(u); 
-            //cout << u->node_value << " has been pushed into ST.\n"; 
+            visitedNodeStack.push(currentNode); 
+            //cout << currentNode->node_value << " has been pushed into visitedNodeStack.\n"; 
         }
-        current_neighbor = u->next_neighbor;
+        current_neighbor = currentNode->next_neighbor;
 		
         while(current_neighbor) 
 		{   
 			// Step 2
-            v = node;
+            neighborNode = node;
 			// find starting backbone
-            while(v->node_value != current_neighbor->node_value) 
+            while(neighborNode->node_value != current_neighbor->node_value) 
 			{  
-                v = v->next_backbone;
+                neighborNode = neighborNode->next_backbone;
 			}
-            //cout << "SL: \n";   
-            //SL.printall();
-            //cout << "ST: \n";  
-            //ST.printall();
-            //cout << v->node_value << endl;
-            if(!ST.inStack(v))
+            //cout << "nodeStack: \n";   
+            //nodeStack.printall();
+            //cout << "visitedNodeStack: \n";  
+            //visitedNodeStack.printall();
+            //cout << neighborNode->node_value << endl;
+            if(!visitedNodeStack.inStack(neighborNode))
 			{ 
 				// Step 3
-                SL.push(v);
-                //cout << v->node_value << " has been pushed into SL.\n";
-                u = v;
+                nodeStack.push(neighborNode);
+                //cout << neighborNode->node_value << " has been pushed into nodeStack.\n";
+                currentNode = neighborNode;
                 break;
             }
             current_neighbor = current_neighbor->next_neighbor;
@@ -267,14 +267,15 @@ void GraphTable::depthFirstSearch(int source, int destination)
         if(!current_neighbor) 
 		{ 
 			// Step 4
-            u = SL.peek();
-            SL.pop();
-            //cout << u->node_value << " has been popped from SL.\n";
-            if(!SL.isEmpty())
-                u = SL.peek();
+            currentNode = nodeStack.peek();
+            nodeStack.pop();
+            //cout << currentNode->node_value << " has been popped from nodeStack.\n";
+            if(!nodeStack.isEmpty())
+                currentNode = nodeStack.peek();
         }
     }
-    if(SL.isEmpty() && u->node_value != destination)
+	// no path found
+    if(nodeStack.isEmpty() && currentNode->node_value != destination)
 	{
         cout << "The mouse cannot reach the cheese from node " 
 				<< source << " to node " << destination << ".\n";
