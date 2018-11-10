@@ -5,7 +5,7 @@ and create an identity label for each block.
 
 ![Graph_Depth_Search](graph_mouse_search.png)
 
-Create graph_table.txt from the picture. Mouse is index 0, cheese is index 25. Map the mouse to the cheese 
+Create graph_table.txt from the picture. Mouse is index 1, cheese is index 25. Map the mouse to the cheese 
 outlining all possible paths denoted by the zeros.
 
 ```
